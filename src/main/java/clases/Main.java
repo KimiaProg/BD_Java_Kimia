@@ -11,12 +11,12 @@ import java.sql.Statement;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		System.out.println("Hola Mundo");
-		Connection con;
-		String url= "jdbc:mysql://localhost:6033/biblioteca";
+		Connection con = null;
+		String url = "jdbc:mysql://localhost:6033/biblioteca";
 		try {
-			con = DriverManager.getConnection(url, "developer" , "programaciondaw");
+			con = DriverManager.getConnection(url, "developer", "programaciondaw");
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -27,6 +27,25 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		String sql = "SELECT * FROM libro;";
+		Statement sentencia = con.createStatement();
+		ResultSet rs = sentencia.executeQuery(sql);
+
+		while (rs.next()) {
+
+			String res = rs.getString("titulo")+ " " + rs.getString("isbn") +" " + rs.getString("autor") +" " + rs.getString("genero")
+			+ " " + rs.getString("paginas");
+			System.out.println(res);
+		}
+		
+		/*sql = "insert into libro values('654645445', 'Veronica' , 'Kimia' , 'NOVELA' , 123);";
+		sentencia.executeUpdate(sql);*/
+		
+		sql = "update libro set genero='NOVELA' where autor='Kimia';";
+		sentencia.executeUpdate(sql);
+		
+		con.close();
 
 	}
 }
