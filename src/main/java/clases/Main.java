@@ -13,6 +13,20 @@ public class Main {
 
 	public static void main(String[] args) {
 		System.out.println("Hola Mundo");
+		Connection con;
+		String url= "jdbc:mysql://localhost:6033/biblioteca";
+		try {
+			con = DriverManager.getConnection(url, "developer" , "programaciondaw");
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }
