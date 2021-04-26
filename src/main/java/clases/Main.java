@@ -11,41 +11,42 @@ import java.sql.Statement;
 
 public class Main {
 
-	public static void main(String[] args) throws SQLException {
-		System.out.println("Hola Mundo");
+	public static void main(String[] args) throws SQLException  {
 		Connection con = null;
 		String url = "jdbc:mysql://localhost:6033/biblioteca";
+		
 		try {
 			con = DriverManager.getConnection(url, "developer", "programaciondaw");
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error");
 		}
 
 		String sql = "SELECT * FROM libro;";
 		Statement sentencia = con.createStatement();
-		ResultSet rs = sentencia.executeQuery(sql);
+		ResultSet rs;
+		try {
+			rs = sentencia.executeQuery(sql);
+		
 
 		while (rs.next()) {
-
 			String res = rs.getString("titulo")+ " " + rs.getString("isbn") +" " + rs.getString("autor") +" " + rs.getString("genero")
 			+ " " + rs.getString("paginas");
 			System.out.println(res);
 		}
 		
-		/*sql = "insert into libro values('654645445', 'Veronica' , 'Kimia' , 'NOVELA' , 123);";
-		sentencia.executeUpdate(sql);*/
+		sql = "insert into libro values('654345451', 'libro 3' , 'Kimia' , 'FICCION' , 123);";
+		sentencia.executeUpdate(sql);
 		
 		sql = "update libro set genero='NOVELA' where autor='Kimia';";
 		sentencia.executeUpdate(sql);
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			con.close();
+		}
 		
-		con.close();
-
+		
 	}
 }
